@@ -41,6 +41,7 @@ const App = () => {
     }
 
     const bestRatedAnecdote = bestRated()
+
     const voteHandler = () => {
         const temp = {...votes}
         temp[selected]++
@@ -49,15 +50,16 @@ const App = () => {
 
     return (
         <div>
-            <h1>Anecdote of the day</h1>
+            <h3>Anecdote of the day</h3>
             <p>{anecdotes[selected]}</p>
             <p>has {votes[selected]} votes</p>
             <div>
                 <Button handler={voteHandler} text={"vote"}/>
                 <Button handler={anecdoteHandler} text={"next anecdote"}/>
             </div>
-            <h1>Anecdote with most votes</h1>
+            <h3>Anecdote with most votes</h3>
             <p>{anecdotes[bestRatedAnecdote]}</p>
+            <p>has {votes[bestRatedAnecdote]} votes</p>
         </div>
     )
 }
