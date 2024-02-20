@@ -1,13 +1,11 @@
 import {useState} from 'react'
 
 const Button = ({handler, text}) => {
-    console.log(text)
     return (
-        <div>
-            <button onClick={handler}>{text}</button>
-        </div>
+        <button onClick={handler}>{text}</button>
     )
 }
+
 const App = () => {
     const anecdotes = [
         'If it hurts, do it more often.',
@@ -21,27 +19,34 @@ const App = () => {
     ]
 
     const [selected, setSelected] = useState(0)
-    const [points, setPoints] = useState({
-        one: 0,
-        two: 0,
-        three: 0,
-        four: 0,
-        five: 0,
-        six: 0,
-        seven: 0
-    })
+    const [votes, setVotes] = useState(Array(8).fill(0))
 
     const anecdoteHandler = () => {
-        setSelected(selected + 1)
+        if (selected < anecdotes.length - 1) {
+            setSelected(selected + 1)
+        } else {
+            setSelected(0)
+        }
     }
 
-    const voteAdder = () => {
-        setVote(selected + 1)
+    const voteHandler = () => {
+        const temp = {...votes}
+        temp[selected]++
+        setVotes(temp)
+        console.log(votes)
     }
+
     return (
         <div>
-            {anecdotes[selected]}
-            <Button handler={anecdoteHandler} text={"next anecdote"}/>
+            <h1>Anecdote of the day</h1>
+            <p>{anecdotes[selected]}</p>
+            <p>has {votes[selected]} votes</p>
+            <div>
+                <Button handler={voteHandler} text={"vote"}/>
+                <Button handler={anecdoteHandler} text={"next anecdote"}/>
+            </div>
+            <h1>Anecdote with most votes</h1>
+            <p></p>
         </div>
     )
 }
