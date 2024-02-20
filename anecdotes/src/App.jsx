@@ -20,7 +20,6 @@ const App = () => {
 
     const [selected, setSelected] = useState(0)
     const [votes, setVotes] = useState(Array(8).fill(0))
-
     const anecdoteHandler = () => {
         if (selected < anecdotes.length - 1) {
             setSelected(selected + 1)
@@ -29,11 +28,23 @@ const App = () => {
         }
     }
 
+    const bestRated = () => {
+        let max = -1
+        let maxIndex = -1
+        for( let i = 0; i < anecdotes.length; i++) {
+            if (votes[i] > max) {
+                max = votes[i]
+                maxIndex = i
+            }
+        }
+        return maxIndex
+    }
+
+    const bestRatedAnecdote = bestRated()
     const voteHandler = () => {
         const temp = {...votes}
         temp[selected]++
         setVotes(temp)
-        console.log(votes)
     }
 
     return (
@@ -46,7 +57,7 @@ const App = () => {
                 <Button handler={anecdoteHandler} text={"next anecdote"}/>
             </div>
             <h1>Anecdote with most votes</h1>
-            <p></p>
+            <p>{anecdotes[bestRatedAnecdote]}</p>
         </div>
     )
 }
